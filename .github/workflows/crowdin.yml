@@ -21,6 +21,9 @@ jobs:
           pull_request_title: "i18n: new translations"
           pull_request_labels: "translations"
           pull_request_body: "New Crowdin pull request with translations"
+          project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
+          api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
