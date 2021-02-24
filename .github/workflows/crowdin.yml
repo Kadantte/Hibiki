@@ -17,6 +17,10 @@ jobs:
         with:
           upload_translations: true
           download_translations: true
+          commit_message: "i18n: new translations"
+          pull_request_title: "i18n: new translations"
+          pull_request_labels: "translations"
+          pull_request_body: "New Crowdin pull request with translations"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
