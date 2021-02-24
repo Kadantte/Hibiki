@@ -15,14 +15,16 @@ jobs:
       - name: Crowdin Synchronization
         uses: crowdin/github-action@1.0.13
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           upload_translations: true
           download_translations: true
           commit_message: "i18n: new translations"
-          pull_request_title: "i18n: new translations"
+          pull_request_title: "[i18n] New translations"
           pull_request_labels: "translations"
           pull_request_body: "New Crowdin pull request with translations"
           project_id: ${{ secrets.CROWDIN_PROJECT_ID }}
           api_token: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
