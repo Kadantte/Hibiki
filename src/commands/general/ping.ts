@@ -1,40 +1,22 @@
-import type { Message, TextChannel } from "eris";
-import { Command } from "../../classes/Command";
+/**
+ * @file Ping command
+ * @module PingCommand
+ */
 
-export class PingCommand extends Command {
-  aliases = ["pong"];
-  description = "Returns the bot's latency.";
-  allowdisable = false;
+import type { MessageComponentInteraction } from "discord.js";
+import { HibikiCommand } from "../../classes/Command";
 
-  async run(msg: Message<TextChannel>) {
-    const pingmsg = await msg.channel.createMessage({
-      embed: {
-        title: `🏓 ${msg.string("general.PING")}`,
-        description: msg.string("general.PING_INITIAL_DESCRIPTION", { latency: msg.channel.guild.shard.latency }),
-        color: msg.convertHex("general"),
-        footer: {
-          text: msg.string("global.RAN_BY", {
-            author: msg.tagUser(msg.author),
-            extra: `${msg.string("global.LATENCY")}: ${msg.channel.guild.shard.latency}ms`,
-          }),
-          icon_url: msg.author.dynamicAvatarURL(),
+export class PingCommand extends HibikiCommand {
+  description = "Checks the current status of the bot.";
+
+  public async run(interaction: MessageComponentInteraction) {
+    interaction.reply({
+      embeds: [
+        {
+          title: interaction.getLocaleString("general.COMMAND_PING_PONG"),
+          description: interaction.getLocaleString("general.COMMAND_PING_DESCRIPTION", { latency: this.bot.ws.ping }),
         },
-      },
-    });
-
-    pingmsg.edit({
-      embed: {
-        title: `🏓 ${msg.string("general.PONG")}`,
-        description: msg.string("general.PING_LATENCY", { latency: pingmsg.timestamp - msg.timestamp }),
-        color: msg.convertHex("general"),
-        footer: {
-          text: msg.string("global.RAN_BY", {
-            author: msg.tagUser(msg.author),
-            extra: `${msg.string("global.LATENCY")}: ${msg.channel.guild.shard.latency}ms`,
-          }),
-          icon_url: msg.author.dynamicAvatarURL(),
-        },
-      },
+      ],
     });
   }
 }

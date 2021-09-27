@@ -1,11 +1,18 @@
 /**
  * @file Index
- * @description Creates an instance of Hibiki
- * @license AGPL-3.0-or-later
+ * @description Creates a new Hibiki sharding manager
+ * @module index
  */
 
-import type { ClientOptions } from "eris";
-import { HibikiClient } from "./classes/Client";
-import config from "../config.json";
+import { HibikiShardingManager } from "./classes/Sharder";
+import { parseHibikiConfig } from "./utils/config";
+import path from "path";
 
-new HibikiClient(config.token, config.eris as ClientOptions);
+// Gets the config & root file
+const HIBIKI_CONFIG_FILE = path.join(__dirname, "../config.toml");
+const HIBIKI_INDEX_FILE = path.join(__dirname, `hibiki.${process.env.NODE_ENV === "development" ? "ts" : "js"}`);
+const config = parseHibikiConfig(HIBIKI_CONFIG_FILE, true);
+
+// Creates and spawns the sharding manager
+const manager = new HibikiShardingManager(HIBIKI_INDEX_FILE, config.hibiki.token, "auto");
+manager.spawn();

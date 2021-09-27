@@ -1,83 +1,20 @@
 /**
- * @file Main typings
- * @description Typings and extensions for the bot
- * @typedef index
+ * @file Index
+ * @description Global typings for Hibiki
+ * @typedef index.d.ts
  */
 
-// Parsed arguments
-interface ParsedArgs {
-  flag: string | string[] | undefined;
-  name: string;
-  optional: boolean;
-  type: string;
-  value?: any;
-}
+// Privately imports types to not break global typings
+type PrivateClientEvents = import("discord.js").ClientEvents;
 
-// Fixed Eris messageReactions typing
-interface MessageReactions {
-  [s: string]: unknown;
-  count: number;
-  me: boolean;
-}
+// Hibiki event emitters
+type HibikiEventEmitter = keyof PrivateClientEvents;
 
-// Bot log data
-interface BotLogs {
-  args: string[];
-  authorID: string;
-  cmdName: string;
-  date: number;
-  guildID: string;
-}
+// Global Discord snowflake type
+type DiscordSnowflake = import("discord.js").Snowflake;
 
-// Antispam data
-interface AntiSpam {
-  content: string;
-  date: number;
-  guild: string;
-  id: string;
-  msgid: string;
-}
+// Valid locale codes. This list will need to be updated manually.
+type HibikiLocaleCode = "en-GB";
 
-// Item in validItems.ts
-interface ValidItem {
-  category?: string;
-  default?: boolean | string | number;
-  dependencies?: string[];
-  emoji?: string;
-  id?: keyof GuildConfig | keyof UserConfig;
-  inviteFilter?: boolean;
-  label?: string;
-  maximum?: number;
-  minimum?: number;
-  name?: string;
-  type?: ValidItemTypes;
-}
-
-// Valid item types
-type ValidItemTypes =
-  | "channel"
-  | "boolean"
-  | "roleArray"
-  | "string"
-  | "channelArray"
-  | "voiceChannel"
-  | "number"
-  | "emoji"
-  | "punishment"
-  | "raidPunishment"
-  | "pronouns"
-  | "locale"
-  | "array"
-  | "timezone"
-  | "role"
-  | "disabledCategories"
-  | "disabledCmds"
-  | "delete";
-
-// Valid item category
-interface ValidItemsCategory {
-  emoji: string;
-  id?: string;
-  items: string[];
-  name: string;
-}
+// Valid database provider names
+type HibikiDatabaseProvider = "postgres" | "json";

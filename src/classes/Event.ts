@@ -1,21 +1,27 @@
 /**
  * @file Event
- * @description Base class for events
+ * @description Base class for all Hibiki events to extend from
+ * @module HibikiEvent
  */
 
 import type { HibikiClient } from "./Client";
-import { convertHex } from "../utils/embed";
-import { tagUser } from "../utils/format";
 
-export abstract class Event {
-  convertHex: typeof convertHex;
-  tagUser: typeof tagUser;
-  abstract events: string[];
+export abstract class HibikiEvent {
+  abstract events: HibikiEventEmitter[];
 
-  constructor(protected bot: HibikiClient, public name: string) {
-    this.convertHex = convertHex;
-    this.tagUser = tagUser;
-  }
+  /**
+   * Creates a new Hibiki event
+   * @param bot Main bot object
+   * @param name The event name, matching the filename
+   */
 
-  abstract run(event: string, ...params: unknown[]): Promise<unknown> | void;
+  constructor(protected bot: HibikiClient, public name: string) {}
+
+  /**
+   * Runs an event
+   * @param event The event to run
+   * @param params Event params
+   */
+
+  abstract run(event: HibikiEventEmitter, ...params: any[]): Promise<void>;
 }

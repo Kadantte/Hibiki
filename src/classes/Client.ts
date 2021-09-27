@@ -1,121 +1,65 @@
 /**
  * @file Client
- * @description Connects to Discord and handles global functions
+ * @description Connects to Discord and handles global functionality
+ * @module HibikiClient
  */
 
-import type { ClientOptions } from "eris";
-import type { Command } from "./Command";
-import type { Event } from "./Event";
-import type { Logger } from "./Logger";
-import Eris, { Client } from "eris";
-import { Args } from "./Args";
-import { Lavalink } from "./Lavalink";
-import { LocaleSystem } from "./Locale";
-import { RethinkProvider } from "./RethinkDB";
-import { InviteHandler } from "../scripts/invites";
-import { MonitorHandler } from "../scripts/monitors";
-import { MuteHandler } from "../scripts/mutes";
-import { ReminderHandler } from "../scripts/reminders";
-import { convertHex, createEmbed, editEmbed } from "../utils/embed";
-import { loadItems } from "../scripts/loader";
-import { tagUser } from "../utils/format";
+import type { HibikiCommand } from "./Command";
+import type { HibikiEvent } from "./Event";
+import type { HibikiLogger } from "./Logger";
+import { loadCommands, loadEvents } from "../utils/loader";
 import { logger } from "../utils/logger";
-import { rotateStatuses } from "../utils/statuses";
-import { startWebserver } from "../webserver/index";
+import { HibikiLocaleSystem } from "./LocaleSystem";
+import { getDatabaseProvider, HibikiProvider } from "./Provider";
+import Discord from "discord.js";
 import path from "path";
-import config from "../../config.json";
-import * as Sentry from "@sentry/node";
 
+// Directories to crawl
+const COMMANDS_DIRECTORY = path.join(__dirname, "../commands");
+const EVENTS_DIRECTORY = path.join(__dirname, "../events");
+const LOGGERS_DIRECTORY = path.join(__dirname, "../loggers");
+const PROVIDERS_DIRECTORY = path.join(__dirname, "../providers");
 const LOCALES_DIRECTORY = path.join(__dirname, "../locales");
 
-export class HibikiClient extends Client {
-  antiSpam: AntiSpam[];
-  args: Args;
-  commands: Array<Command> = [];
-  config: typeof config;
-  cooldowns: Map<string, Date>;
-  db: RethinkProvider;
-  events: Array<Event> = [];
-  inviteHandler: InviteHandler;
-  lavalink: Lavalink;
-  localeSystem: LocaleSystem;
-  log: typeof logger;
-  loggers: Array<Logger> = [];
-  logs: BotLogs[];
-  monitorHandler: MonitorHandler;
-  muteHandler: MuteHandler;
-  reminderHandler: ReminderHandler;
-  snipeData: SnipeData;
+export class HibikiClient extends Discord.Client {
+  readonly config: HibikiConfig;
+  readonly commands: Discord.Collection<string, HibikiCommand> = new Discord.Collection();
+  readonly events: Discord.Collection<string, HibikiEvent> = new Discord.Collection();
+  readonly loggers: Discord.Collection<string, HibikiLogger> = new Discord.Collection();
+  readonly db: HibikiProvider;
+  readonly localeSystem: HibikiLocaleSystem;
 
-  constructor(token: string, options: ClientOptions) {
-    super(token, options);
+  constructor(config: HibikiConfig) {
+    super({ ...config.options, intents: [Discord.Intents.FLAGS.GUILDS] });
+
     this.config = config;
 
-    // Prototype extensions
-    Eris.Message.prototype.createEmbed = createEmbed;
-    Eris.Message.prototype.editEmbed = editEmbed;
-    Eris.Message.prototype.convertHex = convertHex;
-    Eris.Message.prototype.tagUser = tagUser;
-
-    // Collections
-    this.antiSpam = [];
-    this.commands = [];
-    this.events = [];
-    this.loggers = [];
-    this.logs = [];
-    this.snipeData = {};
-    this.cooldowns = new Map();
+    // Finds the database provider to use
+    const HibikiDatabaseProvider = getDatabaseProvider(this.config.database?.provider || "json", PROVIDERS_DIRECTORY);
 
     // Handlers & functions
-    this.log = logger;
-    this.args = new Args(this);
-    this.db = new RethinkProvider();
-    this.lavalink = new Lavalink(this);
-    this.localeSystem = new LocaleSystem(LOCALES_DIRECTORY);
-    this.inviteHandler = new InviteHandler(this);
-    this.monitorHandler = new MonitorHandler(this);
-    this.muteHandler = new MuteHandler(this);
-    this.reminderHandler = new ReminderHandler(this);
-    this.requestHandler = new Eris.RequestHandler(this);
-
-    this.connect();
-    this.editStatus("idle");
-    this.once("ready", async () => this.readyListener());
+    this.db = new HibikiDatabaseProvider(this);
+    this.localeSystem = new HibikiLocaleSystem(LOCALES_DIRECTORY, this.config.hibiki.locale);
   }
 
-  // Runs when the bot is ready
-  async readyListener() {
-    loadItems(this);
-    rotateStatuses(this);
+  /**
+   * Initialises the bot
+   */
 
-    // Enables sentry
-    if (config.sentry) {
-      try {
-        Sentry.init({
-          dsn: config.sentry,
-          environment: process.env.NODE_ENV,
-          release: process.env.npm_package_version,
-          tracesSampleRate: 0.5,
-          maxBreadcrumbs: 50,
-          attachStacktrace: true,
-        });
-      } catch (err) {
-        this.log.error(`Sentry failed to initialize: ${err}`);
-      }
-    }
+  public init() {
+    // Logs into Discord
+    this.login(this.config.hibiki.token).then(() => {
+      // Initializes the database
+      this.db.init();
 
-    // Enables lavalink
-    if (config.lavalink.enabled) this.lavalink.manager.init(this.user.id);
+      // Loads commands, events, and loggers
+      loadCommands(this, COMMANDS_DIRECTORY);
+      loadEvents(this, EVENTS_DIRECTORY);
+      loadEvents(this, LOGGERS_DIRECTORY, true);
 
-    // Starts webservers at first boot
-    if (process.uptime() < 20) {
-      if (config.dashboard.port && config.dashboard.botSecret && config.dashboard.redirectURI) startWebserver(this);
-    }
-
-    this.log.info(`${this.commands.length} commands loaded`);
-    this.log.info(`${this.events.length} events loaded`);
-    this.log.info(`${this.loggers.length} loggers loaded`);
-    this.log.info(`${Object.keys(this.localeSystem.locales).length} locales loaded`);
-    this.log.info(`Logged in as ${tagUser(this.user)} on ${this.guilds.size} guilds`);
+      logger.info(`Logged in as ${this.user?.tag} on ${this.guilds.cache.size} guilds on shard #${this.shard?.ids[0]}`);
+      logger.info(`${this.commands.size} commands and ${this.events.size} events loaded on shard #${this.shard?.ids[0]}`);
+      logger.info(`${Object.keys(this.localeSystem.locales).length} locales loaded on shard #${this.shard?.ids[0]}`);
+    });
   }
 }

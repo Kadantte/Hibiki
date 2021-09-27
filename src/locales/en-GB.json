@@ -1,0 +1,10 @@
+{
+  "NAME": "English",
+
+  "global": {},
+
+  "general": {
+    "COMMAND_PING_PONG": "Pong!",
+    "COMMAND_PING_DESCRIPTION": "This message took {latency}ms to send."
+  }
+}

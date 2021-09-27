@@ -1,30 +1,37 @@
 /**
  * @file Command
- * @description Base class for commands
+ * @description Base class for all commands to extend from
+ * @module HibikiCommand
  */
 
-import type { Message } from "eris";
 import type { HibikiClient } from "./Client";
+import type { ApplicationCommandOptionData, MessageComponentInteraction } from "discord.js";
+import type { ApplicationCommandTypes } from "discord.js/typings/enums";
+import { Constants } from "discord.js";
 
-// Main command class
-export abstract class Command {
-  aliases: string[] = [];
-  args?: string;
-  cooldown?: number;
-  requiredkeys?: string[] = [];
-  clientperms?: string[] = [];
-  requiredperms?: string[] = [];
-  allowdms = false;
-  allowdisable = true;
-  nsfw = false;
-  owner = false;
-  silent = false;
-  staff = false;
+// Exports command option types as this isn't exported by Discord.js itself for some idiotic reason
+export const CommandOptionTypes = Constants.ApplicationCommandOptionTypes;
+
+export abstract class HibikiCommand {
+  type: ApplicationCommandTypes = 3;
+  options?: ApplicationCommandOptionData[];
   voice = false;
 
   abstract description: string;
 
+  /**
+   * Creates a new Hibiki command
+   * @param bot Main bot object
+   * @param name The command name (matches the filename)
+   * @param category The command category (matches the category)
+   */
+
   constructor(protected bot: HibikiClient, public name: string, public category: string) {}
 
-  abstract run(msg: Message, pargs?: ParsedArgs[], args?: string[], ...extra: any): Promise<unknown>;
+  /**
+   * Runs a command
+   * @param interaction The interaction to work with
+   */
+
+  abstract run(interaction: MessageComponentInteraction, ...args: string[]): Promise<void>;
 }
