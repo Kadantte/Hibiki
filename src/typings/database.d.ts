@@ -4,9 +4,6 @@
  * @typedef database
  */
 
-// Valid database table names
-type HIBIKI_DATABASE_TABLE_NAMES = "GUILD_CONFIGS" | "USER_CONFIGS";
-
 // Valid database providers
 type HibikiDatabaseProvider = "postgres" | "json";
 

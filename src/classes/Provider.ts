@@ -6,15 +6,20 @@
 
 import type { HibikiClient } from "./Client";
 import type { PathLike } from "fs";
+import { moduleFiletypeRegex } from "../utils/constants";
 import { logger } from "../utils/logger";
 import fs from "fs";
 
-// Valid database tables
-export const HIBIKI_DATABASE_TABLES: HIBIKI_DATABASE_TABLE_NAMES[] = ["GUILD_CONFIGS", "USER_CONFIGS"];
+// Database table layout
+export enum TABLES {
+  GUILD_CONFIGS = "GUILD_CONFIGS",
+  USER_CONFIGS = "USER_CONFIGS",
+  USER_WARNINGS = "USER_WARNINGS",
+}
 
-/** Type for a callabale Hibiki provider */
+// Type for a callable Hibiki provider
 interface CallableHibikiProvider {
-  new (bot: HibikiClient, ...params: any[]): HibikiProvider;
+  new (bot: HibikiClient): HibikiProvider;
 }
 
 /**
@@ -29,7 +34,7 @@ export function getDatabaseProvider(provider: HibikiDatabaseProvider, directory:
 
   // Looks through providers and finds the matching one
   const providers = fs.readdirSync(directory, { withFileTypes: true, encoding: "utf-8" });
-  const providerFile = providers.find((file) => file.name.replace(/\.(?:t|j)s/, "")?.toLowerCase() === provider.toLowerCase())?.name;
+  const providerFile = providers.find((file) => file.name.replace(moduleFiletypeRegex, "")?.toLowerCase() === provider.toLowerCase())?.name;
 
   // Tries to load the provider
   try {
@@ -49,15 +54,13 @@ export function getDatabaseProvider(provider: HibikiDatabaseProvider, directory:
  */
 
 export abstract class HibikiProvider {
-  /** The name/ID of the provider */
-  abstract providerName: HibikiDatabaseProvider;
+  constructor(protected bot: HibikiClient) {}
 
   /**
    * Initializes a database
-   * @param params Any params needed in said provider
    */
 
-  abstract init(...params: any): Promise<any>;
+  public abstract init(): Promise<any>;
 
   /**
    * Gets a guild's config
@@ -65,21 +68,21 @@ export abstract class HibikiProvider {
    * @returns A guild's config
    */
 
-  abstract getGuildConfig(guild: DiscordSnowflake): Promise<HibikiGuildConfig>;
+  public abstract getGuildConfig(guild: DiscordSnowflake): Promise<HibikiGuildConfig>;
 
   /**
    * Deletes a guild's config
    * @param guild The guild ID to delete a config for
    */
 
-  abstract deleteGuildConfig(guild: DiscordSnowflake): Promise<any>;
+  public abstract deleteGuildConfig(guild: DiscordSnowflake): Promise<any>;
 
   /**
    * Inserts a blank guild config
    * @param guild The guild ID to insert a blank config for
    */
 
-  abstract insertBlankGuildConfig(guild: DiscordSnowflake): Promise<any>;
+  public abstract insertBlankGuildConfig(guild: DiscordSnowflake): Promise<any>;
 
   /**
    * Updates a guild's config
@@ -87,15 +90,7 @@ export abstract class HibikiProvider {
    * @param config The config to insert
    */
 
-  abstract updateGuildConfig(guild: DiscordSnowflake, config: HibikiGuildConfig): Promise<any>;
-
-  /**
-   * Replaces a guild's config
-   * @param guild The guild ID to replace a config in
-   * @param config The config to insert
-   */
-
-  abstract replaceGuildConfig(guild: DiscordSnowflake, config: HibikiGuildConfig): Promise<any>;
+  public abstract updateGuildConfig(guild: DiscordSnowflake, config: HibikiGuildConfig): Promise<any>;
 
   /**
    * Gets a guild's config
@@ -103,21 +98,21 @@ export abstract class HibikiProvider {
    * @returns A guild's config
    */
 
-  abstract getUserConfig(guild: DiscordSnowflake): Promise<HibikiUserConfig>;
+  public abstract getUserConfig(guild: DiscordSnowflake): Promise<HibikiUserConfig>;
 
   /**
    * Deletes a user's config
    * @param user The user ID to delete a config for
    */
 
-  abstract deleteUserConfig(user: DiscordSnowflake): Promise<any>;
+  public abstract deleteUserConfig(user: DiscordSnowflake): Promise<any>;
 
   /**
    * Inserts a blank user config
    * @param user The user ID to insert a blank config for
    */
 
-  abstract insertBlankUserConfig(user: DiscordSnowflake): Promise<any>;
+  public abstract insertBlankUserConfig(user: DiscordSnowflake): Promise<any>;
 
   /**
    * Updates a user's config
@@ -125,13 +120,5 @@ export abstract class HibikiProvider {
    * @param config The config to insert
    */
 
-  abstract updateUserConfig(user: DiscordSnowflake, config: HibikiUserConfig): Promise<any>;
-
-  /**
-   * Replaces a user's config
-   * @param user The user ID to replace a config in
-   * @param config The config to insert
-   */
-
-  abstract replaceUserConfig(user: DiscordSnowflake, config: HibikiUserConfig): Promise<any>;
+  public abstract updateUserConfig(user: DiscordSnowflake, config: HibikiUserConfig): Promise<any>;
 }

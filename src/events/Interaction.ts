@@ -11,7 +11,7 @@ export class HibikiInteractionEvent extends HibikiEvent {
   events: HibikiEventEmitter[] = ["interactionCreate"];
 
   public async run(_event: HibikiEventEmitter, interaction: MessageComponentInteraction) {
-    if (!interaction.isCommand()) return;
+    if (!interaction || !interaction.isCommand()) return;
 
     // Finds the command
     const command = this.bot.commands.find((c) => c.name === interaction.commandName);
@@ -29,6 +29,10 @@ export class HibikiInteractionEvent extends HibikiEvent {
     interaction.getLocaleString = getLocaleStringFunction;
 
     // Runs the command
-    await command.run(interaction);
+    try {
+      await command.run(interaction);
+    } catch (err) {
+      throw new Error(err as string);
+    }
   }
 }

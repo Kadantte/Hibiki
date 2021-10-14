@@ -1,10 +1,12 @@
 {
   "NAME": "English",
 
-  "global": {},
+  "global": {
+    "RAN_BY": "Ran by {tag}"
+  },
 
   "general": {
-    "COMMAND_PING_PONG": "Pong!",
+    "COMMAND_PING_PONG": "🏓 Pong!",
     "COMMAND_PING_DESCRIPTION": "This message took {latency}ms to send."
   }
 }

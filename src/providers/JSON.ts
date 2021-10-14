@@ -4,16 +4,17 @@
  * @module JSONProvider
  */
 
-import { HibikiProvider, HIBIKI_DATABASE_TABLES } from "../classes/Provider";
+import { HibikiProvider, TABLES } from "../classes/Provider";
 import { logger } from "../utils/logger";
 import fs from "fs";
 import path from "path";
 
 const HIBIKI_DATABASE_FILE = path.join(__dirname, "../../hibiki.db.json");
-type HibikiJSONDatabaseStructure = Record<HIBIKI_DATABASE_TABLE_NAMES, any>;
+
+// A type that emulates a Hibiki JSON database structure.
+type HibikiJSONDatabaseStructure = Record<keyof typeof TABLES, Record<string, any>>;
 
 export class JSONProvider extends HibikiProvider {
-  providerName: HibikiDatabaseProvider = "json";
   db = {} as HibikiJSONDatabaseStructure;
 
   public async getGuildConfig(guild: DiscordSnowflake) {
@@ -22,11 +23,6 @@ export class JSONProvider extends HibikiProvider {
 
   public async updateGuildConfig(guild: DiscordSnowflake, config: HibikiUserConfig) {
     this.db.GUILD_CONFIGS[guild] = { ...this.db.GUILD_CONFIGS[guild], ...config };
-    this._updateJSON();
-  }
-
-  public async replaceGuildConfig(guild: DiscordSnowflake, config: HibikiUserConfig) {
-    this.db.GUILD_CONFIGS[guild] = config;
     this._updateJSON();
   }
 
@@ -85,7 +81,7 @@ export class JSONProvider extends HibikiProvider {
     if (!HIBIKI_DATABASE_FILE_CONTENTS?.length) fs.writeFileSync(HIBIKI_DATABASE_FILE, "{}");
 
     this.db = JSON.parse(HIBIKI_DATABASE_FILE_CONTENTS);
-    HIBIKI_DATABASE_TABLES.forEach((name) => {
+    Object.values(TABLES).forEach((name) => {
       if (!this.db[name]) {
         this.db[name] = {};
         logger.info(`Created the ${name} table in the database`);

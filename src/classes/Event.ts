@@ -23,5 +23,5 @@ export abstract class HibikiEvent {
    * @param params Event params
    */
 
-  abstract run(event: HibikiEventEmitter, ...params: any[]): Promise<void>;
+  public abstract run(event: HibikiEventEmitter, ...params: any[]): Promise<void>;
 }

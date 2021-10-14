@@ -33,7 +33,7 @@ export class HibikiShardingManager {
       totalShards: this._shardCount,
       mode: process.env.NODE_ENV === "development" ? "process" : "worker",
       execArgv: process.env.NODE_ENV === "development" ? ["-r", "ts-node/register/transpile-only"] : [],
-      respawn: true,
+      respawn: false,
     });
   }
 

@@ -9,29 +9,31 @@ import type { ApplicationCommandOptionData, MessageComponentInteraction } from "
 import type { ApplicationCommandTypes } from "discord.js/typings/enums";
 import { Constants } from "discord.js";
 
-// Exports command option types as this isn't exported by Discord.js itself for some idiotic reason
 export const CommandOptionTypes = Constants.ApplicationCommandOptionTypes;
 
 export abstract class HibikiCommand {
   type: ApplicationCommandTypes = 3;
   options?: ApplicationCommandOptionData[];
+
+  // Whether or not a command is voice-only
   voice = false;
 
+  // A short description of a command
   abstract description: string;
 
   /**
    * Creates a new Hibiki command
    * @param bot Main bot object
    * @param name The command name (matches the filename)
-   * @param category The command category (matches the category)
+   * @param category The command category (matches the directory)
    */
 
   constructor(protected bot: HibikiClient, public name: string, public category: string) {}
 
   /**
    * Runs a command
-   * @param interaction The interaction to work with
+   * @param interaction The interaction to handle
    */
 
-  abstract run(interaction: MessageComponentInteraction, ...args: string[]): Promise<void>;
+  public abstract run(interaction: MessageComponentInteraction, ...args: string[]): Promise<void>;
 }

@@ -3,4 +3,21 @@ token = ""
 locale = "en-GB"
 testGuildID = ""
 
+[database]
+provider = "json"
+
+# Postgres options
+user = "postgres"
+password = "password"
+host = "127.0.0.1"
+database = "postgres"
+schema = "hibiki"
+
 [options]
+
+[colours]
+primary = "0x648FFF"
+secondary = "0xDC267F"
+error = "0xFE6100"
+success = "0x785EF0"
+warning = "0xFFB000"

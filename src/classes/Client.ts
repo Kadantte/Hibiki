@@ -35,7 +35,7 @@ export class HibikiClient extends Discord.Client {
     this.config = config;
 
     // Finds the database provider to use
-    const HibikiDatabaseProvider = getDatabaseProvider(this.config.database?.provider || "json", PROVIDERS_DIRECTORY);
+    const HibikiDatabaseProvider = getDatabaseProvider(this.config.database?.provider ?? "json", PROVIDERS_DIRECTORY);
 
     // Handlers & functions
     this.db = new HibikiDatabaseProvider(this);
@@ -48,9 +48,9 @@ export class HibikiClient extends Discord.Client {
 
   public init() {
     // Logs into Discord
-    this.login(this.config.hibiki.token).then(() => {
+    this.login(this.config.hibiki.token).then(async () => {
       // Initializes the database
-      this.db.init();
+      await this.db.init();
 
       // Loads commands, events, and loggers
       loadCommands(this, COMMANDS_DIRECTORY);
