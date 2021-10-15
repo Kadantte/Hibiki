@@ -6,7 +6,7 @@ specifiers:
   '@discordjs/voice': ^0.6.0
   '@iarna/toml': ^2.2.5
   '@sysdotini/eslint-config': ^2.0.1
-  '@types/node': ^16.10.9
+  '@types/node': ^16.11.0
   '@types/pino': ^6.3.11
   '@typescript-eslint/eslint-plugin': ^5.0.0
   '@typescript-eslint/parser': ^5.0.0
@@ -25,8 +25,8 @@ specifiers:
   libsodium-wrappers: ^0.7.9
   nodemon: ^2.0.13
   pg: ^8.7.1
-  pino: ^6.13.3
-  pino-pretty: ^7.0.1
+  pino: ^7.0.1
+  pino-pretty: ^7.1.0
   prettier: ^2.4.1
   rimraf: ^3.0.2
   ts-node: ^10.3.0
@@ -43,8 +43,8 @@ dependencies:
   got: 11.8.2
   knex: 0.95.11_pg@8.7.1
   pg: 8.7.1
-  pino: 6.13.3
-  pino-pretty: 7.0.1
+  pino: 7.0.1
+  pino-pretty: 7.1.0
 
 optionalDependencies:
   bufferutil: 4.0.5
@@ -55,7 +55,7 @@ optionalDependencies:
 
 devDependencies:
   '@sysdotini/eslint-config': 2.0.1_fa8816e733f635ed05aee18bb82c3c19
-  '@types/node': 16.10.9
+  '@types/node': 16.11.0
   '@types/pino': 6.3.11
   '@typescript-eslint/eslint-plugin': 5.0.0_3b49a3094ddb22ccc5b4c2c2360792e0
   '@typescript-eslint/parser': 5.0.0_eslint@8.0.1+typescript@4.4.4
@@ -69,7 +69,7 @@ devDependencies:
   nodemon: 2.0.13
   prettier: 2.4.1
   rimraf: 3.0.2
-  ts-node: 10.3.0_1e613d4912436927b18b6995a7885e38
+  ts-node: 10.3.0_036181877a83ed913a2bbec8dcc74354
   typescript: 4.4.4
 
 packages:
@@ -331,6 +331,10 @@ packages:
 
   /@types/node/16.10.9:
     resolution: {integrity: sha512-H9ReOt+yqIJPCutkTYjFjlyK6WEMQYT9hLZMlWtOjFQY2ItppsWZ6RJf8Aw+jz5qTYceuHvFgPIaKOHtLAEWBw==}
+
+  /@types/node/16.11.0:
+    resolution: {integrity: sha512-8MLkBIYQMuhRBQzGN9875bYsOhPnf/0rgXGo66S2FemHkhbn9qtsz9ywV1iCG+vbjigE4WUNVvw37Dx+L0qsPg==}
+    dev: true
 
   /@types/pino-pretty/4.7.1:
     resolution: {integrity: sha512-l1ntNXdpVWsnPYUk5HyO5Lxfr38zLCgxVfEn/9Zhhm+nGF04/BiIou/m8XPwvoVZLV+livUo79VdHXMJPfUYxA==}
@@ -1174,6 +1178,15 @@ packages:
     resolution: {integrity: sha1-7gHdHKwO08vH/b6jfcCo8c4ALOI=}
     dev: true
 
+  /duplexify/4.1.2:
+    resolution: {integrity: sha512-fz3OjcNCHmRP12MJoZMPglx8m4rrFP8rovnk4vT8Fs+aonZoCwGg10dSsQsfP/E62eZcPTMSMP6686fu9Qlqtw==}
+    dependencies:
+      end-of-stream: 1.4.4
+      inherits: 2.0.4
+      readable-stream: 3.6.0
+      stream-shift: 1.0.1
+    dev: false
+
   /emoji-regex/8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
     dev: true
@@ -1542,10 +1555,6 @@ packages:
       rimraf: 3.0.2
     dev: true
 
-  /flatstr/1.0.12:
-    resolution: {integrity: sha512-4zPxDyhCyiN2wIAtSLI6gc82/EjqZc1onI4Mz/l0pWrAlsSfYH/2ZIcU+e3oA2wDwbzIWNKwa23F8rh6+DRWkw==}
-    dev: false
-
   /flatted/3.2.2:
     resolution: {integrity: sha512-JaTY/wtrcSyvXJl4IMFHPKyFur1sE9AUqc0QnhOaJ0CxHtAoIV8pYDzeEfAaNEtGkOfq4gr3LBFmdXW5mOQFnA==}
     dev: true
@@ -1602,7 +1611,6 @@ packages:
   /get-caller-file/2.0.5:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
     engines: {node: 6.* || 8.* || >= 10.*}
-    dev: true
 
   /get-intrinsic/1.1.1:
     resolution: {integrity: sha512-kWZrnVM42QCiEA2Ig1bG8zjoIMOgxWwYCEeNdwY6Tv/cOSeGpcoX4pXHfKUxNKVoArnrEr2e9srnAxxGIraS9Q==}
@@ -2044,6 +2052,10 @@ packages:
     resolution: {integrity: sha1-nbe1lJatPzz+8wp1FC0tkwrXJlE=}
     dev: true
 
+  /json-stringify-safe/5.0.1:
+    resolution: {integrity: sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=}
+    dev: false
+
   /json5/1.0.1:
     resolution: {integrity: sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==}
     hasBin: true
@@ -2383,6 +2395,10 @@ packages:
       es-abstract: 1.19.1
     dev: true
 
+  /on-exit-leak-free/0.2.0:
+    resolution: {integrity: sha512-dqaz3u44QbRXQooZLTUKU41ZrzYrcvLISVgbrzbyCMxpmSLJvZ3ZamIJIZ29P6OhZIkNIQKosdeM6t1LYbA9hg==}
+    dev: false
+
   /once/1.4.0:
     resolution: {integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=}
     dependencies:
@@ -2545,14 +2561,15 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
-  /pino-abstract-transport/0.3.0:
-    resolution: {integrity: sha512-jsd59/ruahIoIU4xAdFtvk3lS9rwsDNJ7Vi0K34ATh1PEOD796SPqvydMaRk296CeTROyBG0SNCwsshN6QhxVg==}
+  /pino-abstract-transport/0.4.0:
+    resolution: {integrity: sha512-Znl3f1ntZnDG+NpCyJyJDS+lkrlRSbgQBkV3eqNAvet/QHql6rhKLc4DuYRlwfc3fvV611O9NXPm5pbT9AJ50g==}
     dependencies:
+      duplexify: 4.1.2
       split2: 3.2.2
     dev: false
 
-  /pino-pretty/7.0.1:
-    resolution: {integrity: sha512-GMcNSmkZkwZseMOkaQWgmkGBPPhSuVwDZMf85i3sbkD/rZldoYyLSyU22YcXvYoLc3usX25GLA1VN6zvzQx7MQ==}
+  /pino-pretty/7.1.0:
+    resolution: {integrity: sha512-khuvWuuf2ABRp388AlPOv3sOzj+zEgnj9EeFOXw1VUqmSuPK1JqKfdvITk6prhxddVgnjQtbi5x63QeIcWencw==}
     hasBin: true
     dependencies:
       args: 5.0.1
@@ -2560,7 +2577,7 @@ packages:
       dateformat: 4.6.3
       fast-safe-stringify: 2.1.1
       joycon: 3.0.1
-      pino-abstract-transport: 0.3.0
+      pino-abstract-transport: 0.4.0
       pump: 3.0.0
       readable-stream: 3.6.0
       rfdc: 1.3.0
@@ -2569,21 +2586,24 @@ packages:
       strip-json-comments: 3.1.1
     dev: false
 
-  /pino-std-serializers/3.2.0:
-    resolution: {integrity: sha512-EqX4pwDPrt3MuOAAUBMU0Tk5kR/YcCM5fNPEzgCO2zJ5HfX0vbiH9HbJglnyeQsN96Kznae6MWD47pZB5avTrg==}
+  /pino-std-serializers/4.0.0:
+    resolution: {integrity: sha512-cK0pekc1Kjy5w9V2/n+8MkZwusa6EyyxfeQCB799CQRhRt/CqYKiWs5adeu8Shve2ZNffvfC/7J64A2PJo1W/Q==}
     dev: false
 
-  /pino/6.13.3:
-    resolution: {integrity: sha512-tJy6qVgkh9MwNgqX1/oYi3ehfl2Y9H0uHyEEMsBe74KinESIjdMrMQDWpcZPpPicg3VV35d/GLQZmo4QgU2Xkg==}
+  /pino/7.0.1:
+    resolution: {integrity: sha512-lQze+stYPTV232Et/lerFI3AatzGVPCWQuOgoOIncfbBgPCu66pjknRfSyCKeVrlOAqqFgne52nJNZleOBUKxw==}
     hasBin: true
     dependencies:
       fast-redact: 3.0.2
-      fast-safe-stringify: 2.1.1
       fastify-warning: 0.2.0
-      flatstr: 1.0.12
-      pino-std-serializers: 3.2.0
+      get-caller-file: 2.0.5
+      json-stringify-safe: 5.0.1
+      on-exit-leak-free: 0.2.0
+      pino-abstract-transport: 0.4.0
+      pino-std-serializers: 4.0.0
       quick-format-unescaped: 4.0.4
-      sonic-boom: 1.4.1
+      sonic-boom: 2.3.0
+      thread-stream: 0.11.1
     dev: false
 
   /pkg-dir/2.0.0:
@@ -2900,13 +2920,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /sonic-boom/1.4.1:
-    resolution: {integrity: sha512-LRHh/A8tpW7ru89lrlkU4AszXt1dbwSjVWguGrmlxE7tawVmDBlI1PILMkXAxJTwqhgsEeTHzj36D5CmHgQmNg==}
-    dependencies:
-      atomic-sleep: 1.0.0
-      flatstr: 1.0.12
-    dev: false
-
   /sonic-boom/2.3.0:
     resolution: {integrity: sha512-lEPaw654/4/rCJHz/TNzV4GIthqCq4inO+O3aFhbdOvR1bE+2//sVkcS+xlqPdb8gdjQCEE0hE9BuvnVixbnWQ==}
     dependencies:
@@ -2921,6 +2934,10 @@ packages:
   /sprintf-js/1.0.3:
     resolution: {integrity: sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=}
     dev: true
+
+  /stream-shift/1.0.1:
+    resolution: {integrity: sha512-AiisoFqQ0vbGcZgQPY1cdP2I76glaVA/RauYR4G4thNFgkTqr90yXTo4LYX60Jl+sIlPNHHdGSwo01AvbKUSVQ==}
+    dev: false
 
   /string-width/2.1.1:
     resolution: {integrity: sha512-nOqH59deCq9SRHlxq1Aw85Jnt4w6KvLKqWVik6oA9ZklXLNIOlqg4F2yrT1MVaTjAqvVwdfeZ7w7aCvJD7ugkw==}
@@ -3031,6 +3048,10 @@ packages:
     resolution: {integrity: sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=}
     dev: true
 
+  /thread-stream/0.11.1:
+    resolution: {integrity: sha512-YbZEIo+JcScRekY1bl7O717RZGA/1eT7t4n9uyKf5Fu7TYpZKuml185bQdV3l2pgoq0wCobkQySWxdNEORkghg==}
+    dev: false
+
   /through2/2.0.5:
     resolution: {integrity: sha512-/mrRod8xqpA+IHSLyGCQ2s8SPHiCDEeQJSep1jqLYeEUClOFG2Qsh+4FU6G9VeqpZnGW/Su8LQGc4YKni5rYSQ==}
     dependencies:
@@ -3074,7 +3095,7 @@ packages:
     resolution: {integrity: sha512-nXIb1fvdY5CBSrDIblLn73NW0qRDk5yJ0Sk1qPBF560OdJfQp9jhl+0tzcY09OZ9U+6GpeoI9RjwoIKFIoB9MQ==}
     dev: false
 
-  /ts-node/10.3.0_1e613d4912436927b18b6995a7885e38:
+  /ts-node/10.3.0_036181877a83ed913a2bbec8dcc74354:
     resolution: {integrity: sha512-RYIy3i8IgpFH45AX4fQHExrT8BxDeKTdC83QFJkNzkvt8uFB6QJ8XMyhynYiKMLxt9a7yuXaDBZNOYS3XjDcYw==}
     hasBin: true
     peerDependencies:
@@ -3093,7 +3114,7 @@ packages:
       '@tsconfig/node12': 1.0.9
       '@tsconfig/node14': 1.0.1
       '@tsconfig/node16': 1.0.2
-      '@types/node': 16.10.9
+      '@types/node': 16.11.0
       acorn: 8.5.0
       acorn-walk: 8.2.0
       arg: 4.1.3
