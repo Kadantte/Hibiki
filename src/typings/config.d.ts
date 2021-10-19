@@ -28,7 +28,7 @@ interface HibikiDatabaseOptions {
   port?: number;
   host?: string;
   database?: string;
-  schema?: string;
+  schema: string;
   provider: HibikiDatabaseProvider;
 }
 

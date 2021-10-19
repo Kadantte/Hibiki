@@ -9,8 +9,7 @@ import pino from "pino";
  * Creates a new pino logger
  */
 
-export const logger = pino({
-  // @ts-expect-error See https://github.com/pinojs/pino-pretty/issues/248
+const pinoOptions: pino.LoggerOptions = {
   transport: {
     target: "pino-pretty",
     options: {
@@ -18,4 +17,7 @@ export const logger = pino({
       colorize: true,
     },
   },
-});
+};
+
+// Exports pino logger
+export const logger = pino(process.env.NODE_ENV === "production" ? {} : pinoOptions);
