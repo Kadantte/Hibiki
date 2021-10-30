@@ -2,11 +2,27 @@
   "NAME": "English",
 
   "global": {
-    "RAN_BY": "Ran by {tag}"
+    "ACCOUNT_CREATED": "Account Created",
+    "ACCOUNT_JOINED": "Account Joined",
+    "CREATED_ON": "Created On",
+    "ID": "ID",
+    "NICKNAME": "Nickname",
+    "HIGHEST_ROLE": "Highest Role",
+    "RAN_BY": "Ran by {tag}",
+    "ERROR": "❌ Error",
+    "MEMBERS": "Members",
+    "CHANNELS": "Channels",
+    "ROLES": "Roles",
+    "EMOJIS": "Emojis",
+    "STICKERS": "Stickers",
+    "OWNER": "Owner"
   },
 
   "general": {
     "COMMAND_PING_PONG": "🏓 Pong!",
-    "COMMAND_PING_DESCRIPTION": "This message took {latency}ms to send."
+    "COMMAND_PING_DESCRIPTION": "This message took {latency}ms to send.",
+
+    "COMMAND_USERINFO_FAILED": "Failed to get that user's information. Try again later.",
+    "COMMAND_SERVERINFO_FAILED": "Failed to get the server's information. Try again later."
   }
 }

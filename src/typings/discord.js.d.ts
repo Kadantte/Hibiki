@@ -7,7 +7,7 @@
 import type { GetLocaleString } from "./locales";
 
 declare module "discord.js" {
-  declare interface MessageComponentInteraction {
+  declare interface CommandInteraction {
     getLocaleString: GetLocaleString;
   }
 }

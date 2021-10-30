@@ -12,6 +12,7 @@ interface HibikiConfig {
   options: import("discord.js").ClientOptions;
   database: HibikiDatabaseOptions;
   colours: HibikiColourOptions;
+  webserver: HibikiWebserverOptions;
 }
 
 // Options for Hibiki itself
@@ -38,4 +39,9 @@ type HibikiColourOptions = {
   error: PrivateColorResolvable;
   success: PrivateColorResolvable;
   warning: PrivateColorResolvable;
+};
+
+// Valid webserver config
+type HibikiWebserverOptions = {
+  port?: number;
 };

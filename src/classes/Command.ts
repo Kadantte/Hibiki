@@ -5,14 +5,14 @@
  */
 
 import type { HibikiClient } from "./Client";
-import type { ApplicationCommandOptionData, MessageComponentInteraction } from "discord.js";
+import type { ApplicationCommandOptionData, CommandInteraction } from "discord.js";
 import type { ApplicationCommandTypes } from "discord.js/typings/enums";
 import { Constants } from "discord.js";
 
 export const CommandOptionTypes = Constants.ApplicationCommandOptionTypes;
 
 export abstract class HibikiCommand {
-  type: ApplicationCommandTypes = 3;
+  type?: ApplicationCommandTypes;
   options?: ApplicationCommandOptionData[];
 
   // Whether or not a command is voice-only
@@ -35,5 +35,5 @@ export abstract class HibikiCommand {
    * @param interaction The interaction to handle
    */
 
-  public abstract run(interaction: MessageComponentInteraction, ...args: string[]): Promise<void>;
+  public abstract run(interaction: CommandInteraction, ...args: string[]): Promise<void>;
 }

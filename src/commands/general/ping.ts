@@ -1,15 +1,10 @@
-/**
- * @file Ping command
- * @module PingCommand
- */
-
-import type { MessageComponentInteraction } from "discord.js";
+import type { CommandInteraction } from "discord.js";
 import { HibikiCommand } from "../../classes/Command";
 
 export class PingCommand extends HibikiCommand {
   description = "Checks the current status of the bot.";
 
-  public async run(interaction: MessageComponentInteraction) {
+  public async run(interaction: CommandInteraction) {
     interaction.reply({
       embeds: [
         {

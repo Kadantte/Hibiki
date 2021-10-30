@@ -4,13 +4,13 @@
  * @module HibikiInteractionEvent
  */
 
-import type { MessageComponentInteraction } from "discord.js";
+import type { CommandInteraction } from "discord.js";
 import { HibikiEvent } from "../classes/Event";
 
 export class HibikiInteractionEvent extends HibikiEvent {
   events: HibikiEventEmitter[] = ["interactionCreate"];
 
-  public async run(_event: HibikiEventEmitter, interaction: MessageComponentInteraction) {
+  public async run(_event: HibikiEventEmitter, interaction: CommandInteraction) {
     if (!interaction || !interaction.isCommand()) return;
 
     // Finds the command
